@@ -1,18 +1,17 @@
 package com.nursultanturdaliev.newyorktimesbestsellers;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.nursultanturdaliev.newyorktimesbestsellers.adapter.MyAdapter;
 import com.nursultanturdaliev.newyorktimesbestsellers.service.NewYorkTimesApiResponse;
 import com.nursultanturdaliev.newyorktimesbestsellers.service.NewYorkTimesBooksApiService;
 
-import java.util.List;
-
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -38,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         cache = new Cache(getCacheDir(), cacheSize);
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         retrofit = new Retrofit.Builder().
-                baseUrl("https://api.nytimes.com")
+                    baseUrl("https://api.nytimes.com")
                 .addConverterFactory(MoshiConverterFactory.create())
                 .client(okHttpClient)
                 .build();
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<NewYorkTimesApiResponse> call, Throwable t) {
-
+                Toast.makeText(getApplicationContext(),"Failed", Toast.LENGTH_LONG).show();
             }
         });
 
